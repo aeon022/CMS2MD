@@ -1,0 +1,42 @@
+{
+  "name": "cms2md",
+  "version": "0.1.0",
+  "description": "Zero-config Directus & Notion to Markdown Sync Engine for Next.js, Astro & Hugo",
+  "main": "dist/index.js",
+  "bin": {
+    "cms2md": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "ts-node src/index.ts"
+  },
+  "keywords": [
+    "cli",
+    "directus",
+    "notion",
+    "markdown",
+    "astro",
+    "nextjs",
+    "cms",
+    "sync"
+  ],
+  "author": "aeon022",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.0.0",
+    "fs-extra": "^11.2.0",
+    "js-yaml": "^4.1.0",
+    "node-fetch": "^2.7.0",
+    "turndown": "^7.1.3"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.11.0",
+    "@types/node-fetch": "^2.6.13",
+    "@types/turndown": "^5.0.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
