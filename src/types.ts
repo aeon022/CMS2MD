@@ -30,5 +30,6 @@ export interface SyncResult {
   updated: number;
   skipped: number;
   errors: number;
+  conflicts: number;
   isPro: boolean;
 }

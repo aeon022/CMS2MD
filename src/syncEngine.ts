@@ -40,10 +40,23 @@ export class SyncEngine {
     const outputDir = path.resolve(this.config.outputDir);
     await fs.ensureDir(outputDir);
 
+    // State from the last successful sync: filename -> hash of the content cms2md wrote.
+    // Used to tell "CMS changed" apart from "user hand-edited the local file" before overwriting.
+    const stateFilePath = path.join(outputDir, '.cms2md-sync-state.json');
+    let syncState: Record<string, string> = {};
+    if (await fs.pathExists(stateFilePath)) {
+      try {
+        syncState = await fs.readJson(stateFilePath);
+      } catch {
+        syncState = {}; // corrupt/unreadable state file — fall back to "no prior record" (safe default)
+      }
+    }
+
     let created = 0;
     let updated = 0;
     let skipped = 0;
     let errors = 0;
+    let conflicts = 0;
 
     for (const item of items) {
       try {
@@ -57,7 +70,8 @@ export class SyncEngine {
           .replace(/-+/g, '-')
           .trim();
 
-        const filePath = path.join(outputDir, `${sanitizedFilename}.md`);
+        const stateKey = `${sanitizedFilename}.md`;
+        const filePath = path.join(outputDir, stateKey);
         const { fullContent } = convertToMarkdown(item);
         const newHash = calculateHash(fullContent);
 
@@ -70,13 +84,30 @@ export class SyncEngine {
             continue;
           }
 
+          const lastSyncedHash = syncState[stateKey];
+          // No prior record = nothing to protect = safe to write normally (e.g. first sync,
+          // or a pre-existing file that predates cms2md tracking it).
+          const editedSinceLastSync = lastSyncedHash !== undefined && lastSyncedHash !== existingHash;
+
+          if (editedSinceLastSync) {
+            const conflictPath = `${filePath}.new`;
+            await fs.writeFile(conflictPath, fullContent, 'utf8');
+            conflicts++;
+            console.warn(`  ⚠ Local edit detected — CMS changes NOT applied: ${stateKey}`);
+            console.warn(`    Your local edit was preserved. Incoming CMS content saved to: ${stateKey}.new`);
+            console.warn(`    Review and merge manually, then re-run sync.`);
+            continue; // don't touch the local file or its recorded hash
+          }
+
           await fs.writeFile(filePath, fullContent, 'utf8');
+          syncState[stateKey] = newHash;
           updated++;
-          console.log(`  ✓ Updated: ${sanitizedFilename}.md`);
+          console.log(`  ✓ Updated: ${stateKey}`);
         } else {
           await fs.writeFile(filePath, fullContent, 'utf8');
+          syncState[stateKey] = newHash;
           created++;
-          console.log(`  + Created: ${sanitizedFilename}.md`);
+          console.log(`  + Created: ${stateKey}`);
         }
       } catch (err: any) {
         errors++;
@@ -84,12 +115,15 @@ export class SyncEngine {
       }
     }
 
+    await fs.writeJson(stateFilePath, syncState, { spaces: 2 });
+
     return {
       total: items.length,
       created,
       updated,
       skipped,
       errors,
+      conflicts,
       isPro
     };
   }

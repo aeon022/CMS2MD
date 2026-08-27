@@ -84,8 +84,13 @@ program
       console.log(`  Created         : ${result.created}`);
       console.log(`  Updated         : ${result.updated}`);
       console.log(`  Skipped (Diff)  : ${result.skipped}`);
+      console.log(`  Conflicts (Local Edits) : ${result.conflicts}`);
       console.log(`  Errors          : ${result.errors}`);
       console.log(`  Pro Mode        : ${result.isPro ? 'ENABLED ✓' : 'DISABLED (Free Tier)'}\n`);
+
+      if (result.conflicts > 0) {
+        console.log(`⚠ ${result.conflicts} file(s) had local edits — incoming CMS content was saved to *.md.new instead of overwriting. Review and merge manually.\n`);
+      }
 
       if (!result.isPro) {
         console.log('💡 Support development & unlock unlimited items: https://buy.polar.sh/polar_cl_BN6xwyJH2Drn6WuzvV49E2KCGauvtoTHixD3w1hCpSH');

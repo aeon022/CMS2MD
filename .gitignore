@@ -3,3 +3,5 @@ dist/
 .DS_Store
 *.log
 cms2md.config.json
+.cms2md-sync-state.json
+*.md.new
