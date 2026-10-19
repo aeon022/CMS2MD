@@ -7,7 +7,7 @@ const path = require('path');
 process.env.HOME = fs.mkdtempSync(path.join(os.tmpdir(), 'c2m-'));
 delete process.env.POLAR_LICENSE_KEY;
 
-let reply = { status: 200, ok: true, body: { valid: false } };
+let reply = { status: 200, ok: true, body: { status: 'revoked' } };
 const fake = async () => ({ status: reply.status, ok: reply.ok, json: async () => reply.body });
 require.cache[require.resolve('node-fetch')] = { id: 'x', filename: 'x', loaded: true, exports: Object.assign(fake, { default: fake, __esModule: true }) };
 const { validatePolarLicense } = require('../dist/license');
@@ -24,7 +24,8 @@ test('a server error is not reported as an invalid key', async () => {
   assert.match(r.message, /unavailable/);
 });
 
-test('a valid answer unlocks Pro', async () => {
-  reply = { status: 200, ok: true, body: { valid: true } };
+test('a valid answer unlocks Pro and keys are masked', async () => {
+  reply = { status: 200, ok: true, body: { status: 'granted', benefit_id: 'b1' } };
   assert.strictEqual((await validatePolarLicense('some-key')).valid, true);
 });
+
