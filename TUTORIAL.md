@@ -20,13 +20,13 @@ Welcome to the **CMS2MD** tutorial! This guide covers real-world setup recipes, 
 Install CMS2MD globally via npm:
 
 ```bash
-npm install -g cms2md
+npm install -g github:aeon022/CMS2MD
 ```
 
 Or run via `npx`:
 
 ```bash
-npx cms2md sync --help
+npx github:aeon022/CMS2MD sync --help
 ```
 
 ---
@@ -126,7 +126,7 @@ jobs:
 
       - name: Install & Run CMS2MD
         run: |
-          npm install -g cms2md
+          npm install -g github:aeon022/CMS2MD
           cms2md sync --config cms2md.config.json
         env:
           POLAR_LICENSE_KEY: ${{ secrets.POLAR_LICENSE_KEY }}

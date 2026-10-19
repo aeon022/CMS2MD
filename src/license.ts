@@ -7,14 +7,10 @@ export interface LicenseValidationResult {
 
 export async function validatePolarLicense(licenseKey?: string): Promise<LicenseValidationResult> {
   if (!licenseKey || licenseKey.trim() === '') {
-    return { valid: false, message: 'Free Tier (Limit: 25 items per run. Unlock Pro for unlimited sync & asset downloading)' };
+    return { valid: false, message: 'Free Tier (limit: 25 items per run; a Pro license raises it)' };
   }
 
   const cleanKey = licenseKey.trim();
-
-  if (cleanKey === 'A83-OFFLINE-DEV') {
-    return { valid: true, message: 'PRO License Verified (Offline Mode)' };
-  }
 
   try {
     // The old code called Polar's /v1/license-keys/validate directly, which
@@ -32,6 +28,9 @@ export async function validatePolarLicense(licenseKey?: string): Promise<License
       body: JSON.stringify({ key: cleanKey })
     });
 
+    if (res.status >= 500) {
+      return { valid: false, message: 'License server unavailable right now. Try again later; your key was not rejected.' };
+    }
     const data: any = await res.json().catch(() => ({}));
     if (res.ok && data.valid) {
       return { valid: true, message: 'PRO License Verified (Polar.sh)' };

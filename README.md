@@ -1,6 +1,5 @@
 # 📦 CMS2MD: Directus & Notion to Markdown Sync Engine
 
-[![npm version](https://img.shields.io/npm/v/cms2md.svg)](https://www.npmjs.com/package/cms2md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Support on Polar](https://img.shields.io/badge/Support_CMS2MD-Polar-0066FF.svg?style=flat-square&logo=polar)](https://buy.polar.sh/polar_cl_BN6xwyJH2Drn6WuzvV49E2KCGauvtoTHixD3w1hCpSH)
 [![Created by abteilung83](https://img.shields.io/badge/Crafted%20by-abteilung83-black.svg)](https://github.com/aeon022)
@@ -14,10 +13,10 @@
 Follow this 2-minute step-by-step tutorial to get your headless CMS synced into local Markdown files.
 
 ### Step 1: Install CMS2MD
-Install globally via npm or run directly with `npx`:
+Install straight from GitHub (Node 18+; the package builds itself on install) or run directly with `npx`:
 
 ```bash
-npm install -g cms2md
+npm install -g github:aeon022/CMS2MD
 ```
 
 ### Step 2: Initialize Configuration
@@ -62,13 +61,13 @@ cms2md sync --cms directus --endpoint https://your-directus-instance.com --token
 - ⚡ **SHA-256 Checksum Diffing**: Avoids overwriting unchanged files, preserving file modification timestamps (`mtime`).
 - 🏷️ **YAML Frontmatter Injection**: Formats slugs, dates, tags, and custom metadata automatically.
 - 🚀 **Git & CI/CD Ready**: Perfect for GitHub Actions to build static sites whenever CMS content updates.
-- 🔑 **Polar.sh Pro License**: Unlock unlimited items & asset downloading via Polar checkout.
+- 🔑 **Polar.sh Pro License**: Support the project via Polar and raise the free 25-items-per-run limit.
 
 ---
 
 ## 💜 Pro License & Support
 
-Support further development and unlock **unlimited item sync** and **asset downloading**!
+Support further development and raise the free limit of 25 items per run!
 
 👉 **[Support & Unlock Pro on Polar](https://buy.polar.sh/polar_cl_BN6xwyJH2Drn6WuzvV49E2KCGauvtoTHixD3w1hCpSH)**
 
