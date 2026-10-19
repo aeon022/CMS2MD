@@ -26,11 +26,12 @@ program
       outputDir: './content/articles',
       filenameField: 'slug',
       statusFilter: 'published',
-      licenseKey: 'polar_cl_YOUR_POLAR_KEY'
+      licenseKey: ''
     };
 
     await fs.writeFile(configPath, JSON.stringify(defaultConfig, null, 2), 'utf8');
     console.log(`[CMS2MD] Created configuration file: ${configPath}`);
+    console.log('[CMS2MD] Keep the API token out of git: set CMS2MD_TOKEN (or NOTION_TOKEN / DIRECTUS_TOKEN) in the environment instead of writing it into this file.');
   });
 
 // Sync Command
@@ -63,6 +64,10 @@ program
         };
       }
 
+      // A token from the environment wins over the file, so it never has to be written into a repo
+      const envToken = process.env.CMS2MD_TOKEN || (config.cms === 'notion' ? process.env.NOTION_TOKEN : process.env.DIRECTUS_TOKEN);
+      if (envToken) config.token = envToken;
+
       // Override with CLI flags if passed
       if (options.cms) config.cms = options.cms;
       if (options.endpoint) config.endpoint = options.endpoint;
@@ -90,6 +95,10 @@ program
 
       if (result.conflicts > 0) {
         console.log(`⚠ ${result.conflicts} file(s) had local edits — incoming CMS content was saved to *.md.new instead of overwriting. Review and merge manually.\n`);
+      }
+
+      if (result.errors > 0) {
+        process.exitCode = 1; // CI and scripts must see that items failed
       }
 
       if (!result.isPro) {

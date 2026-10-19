@@ -58,11 +58,13 @@ export class SyncEngine {
     let errors = 0;
     let conflicts = 0;
 
+    const usedNames = new Set<string>();
+
     for (const item of items) {
       try {
         const filenameKey = this.config.filenameField && item[this.config.filenameField]
           ? String(item[this.config.filenameField])
-          : (item.slug || item.id || `item_${Date.now()}`);
+          : (item.slug || item.id);
 
         const sanitizedFilename = String(filenameKey)
           .toLowerCase()
@@ -70,7 +72,15 @@ export class SyncEngine {
           .replace(/-+/g, '-')
           .trim();
 
+        if (!sanitizedFilename) {
+          throw new Error('no usable file name (empty slug and id)');
+        }
         const stateKey = `${sanitizedFilename}.md`;
+        // two items that map to the same file would overwrite each other on every run
+        if (usedNames.has(stateKey)) {
+          throw new Error(`file name "${stateKey}" is already used by another item in this run; set filenameField to something unique`);
+        }
+        usedNames.add(stateKey);
         const filePath = path.join(outputDir, stateKey);
         const { fullContent } = convertToMarkdown(item);
         const newHash = calculateHash(fullContent);

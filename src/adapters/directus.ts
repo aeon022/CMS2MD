@@ -3,7 +3,7 @@ import { CMSItem, CMS2MDConfig } from '../types';
 
 export async function fetchDirectusItems(config: CMS2MDConfig): Promise<CMSItem[]> {
   const baseUrl = config.endpoint.replace(/\/+$/, '');
-  let url = `${baseUrl}/items/${config.collection}?limit=${config.limit || 100}`;
+  let url = `${baseUrl}/items/${encodeURIComponent(config.collection)}?limit=${config.limit || 100}`;
 
   if (config.statusFilter) {
     url += `&filter[status][_eq]=${encodeURIComponent(config.statusFilter)}`;

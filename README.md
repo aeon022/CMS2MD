@@ -49,8 +49,16 @@ cms2md sync
 
 Or pass configuration flags directly via CLI without a config file:
 ```bash
-cms2md sync --cms directus --endpoint https://your-directus-instance.com --token YOUR_TOKEN --collection articles --output ./src/content/blog
+cms2md sync --cms directus --endpoint https://your-directus-instance.com --collection articles --output ./src/content/blog
 ```
+
+### Tokens, exit codes, Notion
+
+- **Keep the token out of git and out of the process list:** set `CMS2MD_TOKEN` (or `NOTION_TOKEN` / `DIRECTUS_TOKEN`) in the environment. It wins over `cms2md.config.json`; the `--token` flag also works but is visible in `ps`.
+- **Exit code:** `1` when any item failed (so CI notices), `0` otherwise. Local edits are never counted as errors: they are kept, and the incoming version is saved as `<file>.md.new`.
+- **Notion:** all pages of the database are fetched (up to the limit), the page body is converted from blocks, and these properties go into the frontmatter: title, text, select, status, multi-select, date, checkbox, number, URL, email, phone. Other property types and nested blocks are skipped.
+- **Images:** Notion's image links expire after about an hour. cms2md does not download assets (yet), so copy images you want to keep.
+- **File names** come from `filenameField` (default: slug, then id). If two items map to the same file name, the second is reported as an error instead of overwriting the first.
 
 ---
 
