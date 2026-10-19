@@ -1,7 +1,7 @@
 # 📦 CMS2MD: Directus & Notion to Markdown Sync Engine
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Support on Polar](https://img.shields.io/badge/Support_CMS2MD-Polar-0066FF.svg?style=flat-square&logo=polar)](https://buy.polar.sh/polar_cl_BN6xwyJH2Drn6WuzvV49E2KCGauvtoTHixD3w1hCpSH)
+[![Support on Polar](https://img.shields.io/badge/Support_CMS2MD-Polar-0066FF.svg?style=flat-square&logo=polar)](https://buy.polar.sh/polar_cl_kX32ObNSULf0leGRCHifyDfDOKQs5kdoVRvc41mNqQh)
 [![Created by abteilung83](https://img.shields.io/badge/Crafted%20by-abteilung83-black.svg)](https://github.com/aeon022)
 
 **CMS2MD** is a zero-config CLI tool and Node.js sync engine developed by **abteilung83**. It fetches content from **Directus** or **Notion** and converts items into clean, git-versioned Markdown files with YAML frontmatter for **Next.js**, **Astro**, **Nuxt**, and **Hugo** static sites.
@@ -69,7 +69,7 @@ cms2md sync --cms directus --endpoint https://your-directus-instance.com --token
 
 Support further development and raise the free limit of 25 items per run!
 
-👉 **[Support & Unlock Pro on Polar](https://buy.polar.sh/polar_cl_BN6xwyJH2Drn6WuzvV49E2KCGauvtoTHixD3w1hCpSH)**
+👉 **[Support & Unlock Pro on Polar](https://buy.polar.sh/polar_cl_kX32ObNSULf0leGRCHifyDfDOKQs5kdoVRvc41mNqQh)**
 
 ---
 

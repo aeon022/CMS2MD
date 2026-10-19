@@ -8,9 +8,8 @@ export interface LicenseValidationResult {
 // aeon022's Polar.sh organization (public: customers need it to validate keys, no secret involved).
 const POLAR_ORG_ID = 'aa792ea4-650e-492e-a955-9b3d564e943e';
 const POLAR_VALIDATE_URL = 'https://api.polar.sh/v1/customer-portal/license-keys/validate';
-// Benefit IDs that unlock this tool. Empty = any granted key of the organization (Bundle, Family, ...)
-// until a dedicated product exists; then list its benefit ID here.
-const ALLOWED_BENEFIT_IDS: string[] = [];
+// Polar benefit that unlocks this tool: the "CMS2MD Pro" product (family keys come from it too).
+const ALLOWED_BENEFIT_IDS: string[] = ['d60daf80-a0d9-4a29-9eda-cd29fdbaba52'];
 
 export async function validatePolarLicense(licenseKey?: string): Promise<LicenseValidationResult> {
   const key = (licenseKey || process.env.POLAR_LICENSE_KEY || '').trim();

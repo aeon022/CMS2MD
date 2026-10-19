@@ -149,7 +149,7 @@ Unlock unlimited item sync and asset downloading by activating your Polar licens
 }
 ```
 
-👉 **[Get Pro License on Polar](https://buy.polar.sh/polar_cl_BN6xwyJH2Drn6WuzvV49E2KCGauvtoTHixD3w1hCpSH)**
+👉 **[Get Pro License on Polar](https://buy.polar.sh/polar_cl_kX32ObNSULf0leGRCHifyDfDOKQs5kdoVRvc41mNqQh)**
 
 ---
 

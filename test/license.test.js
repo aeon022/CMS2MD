@@ -25,7 +25,14 @@ test('a server error is not reported as an invalid key', async () => {
 });
 
 test('a valid answer unlocks Pro and keys are masked', async () => {
-  reply = { status: 200, ok: true, body: { status: 'granted', benefit_id: 'b1' } };
+  reply = { status: 200, ok: true, body: { status: 'granted', benefit_id: 'd60daf80-a0d9-4a29-9eda-cd29fdbaba52' } };
   assert.strictEqual((await validatePolarLicense('some-key')).valid, true);
 });
 
+
+test('a key of another product does not unlock this tool', async () => {
+  reply = { status: 200, ok: true, body: { status: 'granted', benefit_id: '00000000-0000-0000-0000-000000000000' } };
+  const r = await validatePolarLicense('some-key');
+  assert.strictEqual(r.valid, false);
+  assert.match(r.message, /does not include/);
+});

@@ -93,7 +93,7 @@ program
       }
 
       if (!result.isPro) {
-        console.log('💡 Support development & unlock unlimited items: https://buy.polar.sh/polar_cl_BN6xwyJH2Drn6WuzvV49E2KCGauvtoTHixD3w1hCpSH');
+        console.log('💡 Support development & unlock unlimited items: https://buy.polar.sh/polar_cl_kX32ObNSULf0leGRCHifyDfDOKQs5kdoVRvc41mNqQh');
       }
     } catch (err: any) {
       console.error(`[CMS2MD] Fatal Error: ${err.message}`);
